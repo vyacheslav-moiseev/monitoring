@@ -4,8 +4,7 @@
  curl "http://localhost:9115/probe?target=https://leads.su&module=http_2xx" |grep success
 
 ### Prometheus
-![img.png](img.png)
+![Prometheus Dashboard](https://user-images.githubusercontent.com/твой_username/твой_image_id.png)
 
 ### Grafana
-
-![img_1.png](img_1.png)
+![Grafana Dashboard](https://user-images.githubusercontent.com/твой_username/другой_image_id.png)
