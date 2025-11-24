@@ -1,0 +1,43 @@
+{
+  "dashboard": {
+    "title": "Website Uptime",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Website Availability",
+        "targets": [
+          {
+            "expr": "probe_success{instance='https://leads.su'}",
+            "legendFormat": "leads.su"
+          },
+          {
+            "expr": "probe_success{instance='https://api.leads.su'}",
+            "legendFormat": "api.leads.su"
+          },
+          {
+            "expr": "probe_success{instance='https://tracker.leads.su'}",
+            "legendFormat": "tracker.leads.su"
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Website Response Time",
+        "targets": [
+          {
+            "expr": "probe_duration_seconds{instance='https://leads.su'}",
+            "legendFormat": "leads.su"
+          },
+          {
+            "expr": "probe_duration_seconds{instance='https://api.leads.su'}",
+            "legendFormat": "api.leads.su"
+          },
+          {
+            "expr": "probe_duration_seconds{instance='https://tracker.leads.su'}",
+            "legendFormat": "tracker.leads.su"
+          }
+        ]
+      }
+    ]
+  }
+}
