@@ -1,13 +1,13 @@
-### Проверка работы Blackbox Exporter
+# Мониторинг: Prometheus + Grafana + Blackbox Exporter
+
+Тестовое задание — развёртывание системы мониторинга с помощью Docker Compose.
+
+Включает:
+- Prometheus — сбор метрик
+- Grafana — визуализация дашбордов
+- Blackbox Exporter — проверка доступности HTTPS и SSL-сертификатов
+
+## Запуск
 
 ```bash
- curl "http://localhost:9115/probe?target=https://leads.su&module=http_2xx" |grep success
-
-
-
-```markdown
-### Prometheus Dashboard
-![Prometheus Dashboard](https://imgur.com/a/3NlSqMp)
-
-### Grafana Dashboard
-![Grafana Dashboard](https://imgur.com/a/KFf3APS)
+docker-compose up -d
