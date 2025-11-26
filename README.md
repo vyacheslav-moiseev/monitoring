@@ -11,8 +11,7 @@
 ## Особенности проекта
 
 - Полностью готово к запуску одной командой
-- Преднастроенные дашборды Grafana (Node Exporter Full + кастомные)
-- Автоматическое обнаружение сервисов через file-based service discovery
+- Преднастроенные дашборды Grafana 
 - Persistant хранилище для Prometheus и Grafana
 - Чистая и понятная структура проекта
 - Поддержка архитектур `linux/amd64` и `linux/arm64` (Apple Silicon)
