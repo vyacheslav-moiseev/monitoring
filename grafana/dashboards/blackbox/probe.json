@@ -1,0 +1,65 @@
+{
+  "id": null,
+  "uid": "blackbox-alerts-triggers",
+  "title": "Blackbox Exporter - Alerts per URL (триггеры на недоступность)",
+  "tags": ["blackbox","alerts"],
+  "timezone": "browser",
+  "schemaVersion": 36,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Probe Success with URL Alerts",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 12 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "Fail", "color": "red" }, "1": { "text": "Success", "color": "green" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "value": null, "color": "red" },
+              { "value": 1, "color": "green" }
+            ]
+          }
+        }
+      },
+      "targets": [
+        { "expr": "probe_success{instance=\"https://leads.su\"}", "legendFormat": "leads.su", "refId": "A" },
+        { "expr": "probe_success{instance=\"https://tracker.leads.su\"}", "legendFormat": "tracker.leads.su", "refId": "B" },
+        { "expr": "probe_success{instance=\"https://api.leads.su\"}", "legendFormat": "api.leads.su", "refId": "C" }
+      ],
+      "alert": {
+        "conditions": [
+          {
+            "type": "query",
+            "query": { "params": ["A", "1m", "now"] },
+            "reducer": { "type": "last" },
+            "evaluator": { "type": "lt", "params": [1] },
+            "operator": { "type": "and" }
+          },
+          {
+            "type": "query",
+            "query": { "params": ["B", "1m", "now"] },
+            "reducer": { "type": "last" },
+            "evaluator": { "type": "lt", "params": [1] },
+            "operator": { "type": "and" }
+          },
+          {
+            "type": "query",
+            "query": { "params": ["C", "1m", "now"] },
+            "reducer": { "type": "last" },
+            "evaluator": { "type": "lt", "params": [1] },
+            "operator": { "type": "and" }
+          }
+        ],
+        "for": "2m",
+        "executionErrorState": "alerting",
+        "notifications": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom" }, "tooltip": { "mode": "allSeries" } }
+    }
+  ]
+}

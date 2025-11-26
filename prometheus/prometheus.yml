@@ -2,7 +2,7 @@ global:
   scrape_interval: 1m
 
 scrape_configs:
-  - job_name: 'blackbox'
+  - job_name: 'blackbox-http'
     metrics_path: /probe
     params:
       module: [http_2xx]
@@ -17,4 +17,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: blackbox_exporter:9115
+        replacement: blackbox:9115
+
+rule_files:
+  - "alert_rules.yml"

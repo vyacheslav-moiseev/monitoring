@@ -1,0 +1,67 @@
+{
+  "id": null,
+  "uid": "blackbox-alerts",
+  "title": "Blackbox Exporter Alerts",
+  "tags": ["blackbox", "http", "alerts"],
+  "timezone": "browser",
+  "schemaVersion": 36,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Probe Success with Alerts",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 10 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "Fail", "color": "red" }, "1": { "text": "Success", "color": "green" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "value": null, "color": "red" },
+              { "value": 1, "color": "green" }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        { "expr": "probe_success{instance=\"https://leads.su\"}", "legendFormat": "leads.su", "refId": "A" },
+        { "expr": "probe_success{instance=\"https://tracker.leads.su\"}", "legendFormat": "tracker.leads.su", "refId": "B" },
+        { "expr": "probe_success{instance=\"https://api.leads.su\"}", "legendFormat": "api.leads.su", "refId": "C" }
+      ],
+      "options": { "tooltip": { "mode": "allSeries" }, "legend": { "displayMode": "table", "placement": "bottom" } },
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": { "params": [0], "type": "lt" },
+            "operator": { "type": "and" },
+            "query": { "params": ["A", "1m", "now"] },
+            "reducer": { "type": "last" },
+            "type": "query"
+          },
+          {
+            "evaluator": { "params": [0], "type": "lt" },
+            "operator": { "type": "and" },
+            "query": { "params": ["B", "1m", "now"] },
+            "reducer": { "type": "last" },
+            "type": "query"
+          },
+          {
+            "evaluator": { "params": [0], "type": "lt" },
+            "operator": { "type": "and" },
+            "query": { "params": ["C", "1m", "now"] },
+            "reducer": { "type": "last" },
+            "type": "query"
+          }
+        ],
+        "for": "2m",
+        "executionErrorState": "alerting",
+        "notifications": []
+      }
+    }
+  ]
+}

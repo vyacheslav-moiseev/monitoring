@@ -1,0 +1,11 @@
+groups:
+  - name: blackbox_alerts
+    rules:
+      - alert: SiteDown
+        expr: probe_success == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Сайт {{ $labels.instance }} недоступен"
+          description: "HTTP probe к {{ $labels.instance }} не прошёл"
