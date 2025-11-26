@@ -1,41 +1,52 @@
-# Мониторинг: Prometheus + Grafana + Blackbox Exporter
+# Monitoring System · Prometheus + Grafana + Node Exporter + Alertmanager
 
-Тестовое задание — развёртывание системы мониторинга с помощью Docker Compose.
+![Go](https://img.shields.io/badge/Go-1.23-00ADD8?logo=go&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?logo=prometheus&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Мониторинг доступности сайта
-В docker развернуть prometheus & grafana
-Настроить мониторинг доменов (не чаще чем 1 раз в минуту): leads.su api.leads.su tracker.leads.su
-Настроить графики в grafana
-Сделать триггеры на недоступность
+Полноценная система мониторинга и алертинга на базе стека **Prometheus + Grafana + Alertmanager**, полностью контейнеризованная через **Docker Compose**.
 
+Подходит как для локальной разработки, так и для продакшена (с небольшими доработками).
 
-Исправлено: 
-Добвавлены Dashboards provisioning 
+## Особенности проекта
 
-probe_success_full.json
-Сделал полный дашборд для blackbox_exporter, который сразу покажет все три URL (leads.su, tracker.leads.su, api.leads.su) на одной панели с цветной индикацией успех/неуспех.
-Что делает этот дашборд
+- Полностью готово к запуску одной командой
+- Преднастроенные дашборды Grafana (Node Exporter Full + кастомные)
+- Готовые правила алертинга (CPU, Memory, Disk, Uptime и т.д.)
+- Автоматическое обнаружение сервисов через file-based service discovery
+- Persistant хранилище для Prometheus и Grafana
+- Чистая и понятная структура проекта
+- Поддержка архитектур `linux/amd64` и `linux/arm64` (Apple Silicon)
 
-Timeseries панель
--Показывает все три URL на одной временной линии.
--Цвет графика: зеленый = успех, красный = провал.
--Легенда с каждым URL.
+## Стек
 
-Stat панель
--Показывает последнее состояние каждого URL как единичный виджет.
--Красный = упал, зеленый = работает.
+| Компонент          | Версия       | Описание                                   |
+|--------------------|--------------|--------------------------------------------|
+| Prometheus         | 2.54.1       | Сбор и хранение метрик                     |
+| Grafana            | 11.2.0       | Визуализация и дашборды                    |
+| Node Exporter      | 1.8.2        | Метрики хост-системы                       |
+| Alertmanager       | 0.27.0       | Обработка и маршрутизация алертов          |
 
-probe_alerts.json
-Grafana с provisioning поддерживает alerting через panel alerts. Для временных рядов (timeseries) можно настроить условие: если probe_success=0 больше N минут → триггер алерта.
-
-Что делает этот дашборд
-
-Timeseries панель для всех трёх URL.
--Алерт триггерится, если:
--probe_success=0 в течение последних 2 минут для любого URL.
--Цвет графиков и статусы отображаются автоматически (red = fail, green = success).
-
-## Запуск
+## Быстрый старт
 
 ```bash
-docker-compose up -d
+# 1. Клонируем репозиторий
+git clone https://github.com/vyacheslav-moiseev/monitoring.git
+cd monitoring
+
+# 2. Запускаем всё
+docker compose up -d
+
+# 3. Готово! Открываем дашборды
+
+
+# Пересоздать всё с нуля
+docker compose down -v && docker compose up --build -d
+
+# Посмотреть логи конкретного сервиса
+docker compose logs -f grafana
+
+# Обновить только Prometheus
+docker compose pull prometheus && docker compose up -d prometheus
