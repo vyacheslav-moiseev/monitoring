@@ -44,3 +44,13 @@ docker compose logs -f grafana
 
 # Обновить только Prometheus
 docker compose pull prometheus && docker compose up -d prometheus
+
+
+
+## ТЗ
+
+Мониторинг доступности сайта
+В docker развернуть prometheus & grafana
+Настроить мониторинг доменов (не чаще чем 1 раз в минуту): leads.su api.leads.su tracker.leads.su
+Настроить графики в grafana
+Сделать триггеры на недоступность
